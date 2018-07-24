@@ -59,3 +59,19 @@ typings/
 
 # next.js build output
 .next
+
+# python env
+env/
+
+# vscode
+.vscode/
+
+# pyc
+py/*.pyc
+
+# build, dist
+build/
+dist/
+
+# srirama
+srirama*
