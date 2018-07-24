@@ -1,8 +1,9 @@
 angular.module('myApp')
     .component('mapContainer', {
         controller: class mapContainer {
-            constructor($scope) {
+            constructor($scope, $filter) {
                 this.scope = $scope;
+
                 this.footers = [
                     {
                         componentName: 'footer-graphs',
@@ -21,6 +22,30 @@ angular.module('myApp')
                             footer.show = true;
                         } else {
                             footer.show = false;
+                        }
+                    });
+                };
+
+                this.modals = [
+                    {
+                        componentName: 'modal-pilih-dimensi',
+                        title: 'Pilih Dimensi',
+                        show: true
+                    },
+                    {
+                        componentName: 'modal-pilih-waktu',
+                        title: 'Pilih Waktu',
+                        show: false
+                    }
+                ];
+                // pilih waktu ditampilkan di komponen footer-graphs
+                this.modalsInMenu = $filter('filter')(this.modals, ({ componentName }) => componentName !== 'modal-pilih-waktu');
+                this.modalShow = (componentName) => {
+                    angular.forEach(this.modals, (modal) => {
+                        if (modal.componentName === componentName) {
+                            modal.show = true;
+                        } else {
+                            modal.show = false;
                         }
                     });
                 };

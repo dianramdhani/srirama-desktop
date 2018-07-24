@@ -2,7 +2,9 @@ angular.module('myApp')
     .component('menuContainer', {
         bindings: {
             footers: '=',
-            footerShow: '&'
+            footerShow: '&',
+            modals: '=',
+            modalShow: '&'
         },
         controller: class menuContainer {
             constructor($scope) {
@@ -12,6 +14,11 @@ angular.module('myApp')
             $onInit() {
                 this.scope.footerShow = (componentName) => {
                     this.footerShow({ componentName: componentName });
+                    this.scope.listMenuShow = false;
+                };
+
+                this.scope.modalShow = (componentName) => {
+                    this.modalShow({ componentName: componentName });
                     this.scope.listMenuShow = false;
                 };
             }

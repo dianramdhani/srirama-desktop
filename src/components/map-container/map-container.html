@@ -1,4 +1,7 @@
-{{$ctrl.footers}}
-<menu-container footers="$ctrl.footers" footer-show="$ctrl.footerShow(componentName)"></menu-container>
+{{$ctrl.modals}}
+<button ng-click="$ctrl.modalShow('modal-pilih-waktu')">Pilih Waktu</button>
 <footer-graphs footers="$ctrl.footers"></footer-graphs>
 <footer-min-max-tables footers="$ctrl.footers"></footer-min-max-tables>
+<modal-pilih-dimensi modals="$ctrl.modals"></modal-pilih-dimensi>
+<modal-pilih-waktu modals="$ctrl.modals"></modal-pilih-waktu>
+<menu-container footers="$ctrl.footers" footer-show="$ctrl.footerShow(componentName)" modals="$ctrl.modalsInMenu" modal-show="$ctrl.modalShow(componentName)"></menu-container>
