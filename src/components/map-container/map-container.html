@@ -1,7 +1,17 @@
-{{$ctrl.modals}}
-<button ng-click="$ctrl.modalShow('modal-pilih-waktu')">Pilih Waktu</button>
+<style>
+    #map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<div id="map"></div>
+
 <footer-graphs footers="$ctrl.footers"></footer-graphs>
 <footer-min-max-tables footers="$ctrl.footers"></footer-min-max-tables>
-<modal-pilih-dimensi modals="$ctrl.modals"></modal-pilih-dimensi>
+<modal-pilih-dimensi modals="$ctrl.modals" select-dimension="$ctrl.selectDimension(selected)"></modal-pilih-dimensi>
 <modal-pilih-waktu modals="$ctrl.modals"></modal-pilih-waktu>
+<modal-loading modals="$ctrl.modals"></modal-loading>
 <menu-container footers="$ctrl.footers" footer-show="$ctrl.footerShow(componentName)" modals="$ctrl.modalsInMenu" modal-show="$ctrl.modalShow(componentName)"></menu-container>

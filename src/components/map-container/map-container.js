@@ -1,9 +1,11 @@
 angular.module('myApp')
     .component('mapContainer', {
         controller: class mapContainer {
-            constructor($scope, $filter) {
-                this.scope = $scope;
+            constructor($filter) {
+                this.filter = $filter;
+            }
 
+            $onInit() {
                 this.footers = [
                     {
                         componentName: 'footer-graphs',
@@ -36,10 +38,14 @@ angular.module('myApp')
                         componentName: 'modal-pilih-waktu',
                         title: 'Pilih Waktu',
                         show: false
+                    },
+                    {
+                        componentName: 'modal-loading',
+                        title: '',
+                        show: false
                     }
                 ];
-                // pilih waktu ditampilkan di komponen footer-graphs
-                this.modalsInMenu = $filter('filter')(this.modals, ({ componentName }) => componentName !== 'modal-pilih-waktu');
+                this.modalsInMenu = this.filter('filter')(this.modals, ({ componentName }) => componentName === 'modal-pilih-dimensi' || componentName === 'modal-loading' || componentName === 'modal-pilih-waktu');
                 this.modalShow = (componentName) => {
                     angular.forEach(this.modals, (modal) => {
                         if (modal.componentName === componentName) {
@@ -49,9 +55,20 @@ angular.module('myApp')
                         }
                     });
                 };
+
+                this.map = {
+                    map: L.map('map').setView([0, 115], 4),
+                    bounds: L.latLngBounds([0, 0], [0, 0]),
+                };
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(this.map['map']);
+                this.map['imageOverlay'] = L.imageOverlay('', this.map.bounds, { opacity: 0.5 });
+                this.map.imageOverlay.addTo(this.map.map);
             }
 
-            $onInit() {
+            selectDimension(selected) {
+                console.log('dimensi yang dipilih', selected);
             }
         },
         templateUrl: './components/map-container/map-container.html'
