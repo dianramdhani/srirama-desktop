@@ -1,8 +1,11 @@
 angular.module('myApp')
     .component('mapContainer', {
         controller: class mapContainer {
-            constructor($filter) {
+            constructor($scope, $filter, $compile, api) {
+                this.scope = $scope;
                 this.filter = $filter;
+                this.compile = $compile;
+                this.api = api;
             }
 
             $onInit() {
@@ -56,6 +59,7 @@ angular.module('myApp')
                     });
                 };
 
+                // inisialisasi map
                 this.map = {
                     map: L.map('map').setView([0, 115], 4),
                     bounds: L.latLngBounds([0, 0], [0, 0]),
@@ -65,10 +69,57 @@ angular.module('myApp')
                 }).addTo(this.map['map']);
                 this.map['imageOverlay'] = L.imageOverlay('', this.map.bounds, { opacity: 0.5 });
                 this.map.imageOverlay.addTo(this.map.map);
+                
+                // map event on click
+                const selectedTemplateForPopup = () => {
+                    let selectedTemplate = '';
+                    for (const propertyName in this.dimsSelected) {
+                        selectedTemplate = selectedTemplate + `${(string => string.charAt(0).toUpperCase() + string.slice(1))(propertyName)}: ${this.dimsSelected[propertyName]}`;
+                        selectedTemplate = selectedTemplate + `<br>`;
+                    }
+                    return selectedTemplate;
+                }
+                this.map.map.on('click', ({ latlng }) => {
+                    const toPopupContent = (latlng, dataPoint) => {
+                        let popupTemplate = `
+                        <div>
+                            <h5>${dataPoint.attrs.long_name}</h5>
+                            <p>
+                                Latitude: ${latlng.lat}
+                                <br>
+                                Longitude: ${latlng.lng}
+                                <br>
+                                ${selectedTemplateForPopup()}
+                                <b>Data: ${dataPoint.data} ${dataPoint.attrs.units}</b>
+                            </p>
+                            <button class="w3-button w3-block w3-round w3-border" ng-click='addMarker(${angular.toJson(latlng)}, ${angular.toJson(dataPoint)})'>Lihat grafik lokasi ini</button>
+                        </div>
+                        `;
+                        return this.compile(popupTemplate)(this.scope)[0];
+                    };
+
+                    if (this.map.bounds.contains(latlng)) {
+                        this.api.getDataPoint(this.dimsSelected, latlng)
+                            .then((res) => {
+                                let popup = L.popup()
+                                    .setLatLng(latlng)
+                                    .setContent(toPopupContent(latlng, res))
+                                    .openOn(this.map.map);
+                            });
+                    }
+                });
             }
 
             selectDimension(selected) {
-                console.log('dimensi yang dipilih', selected);
+                this.api.getLayerHeader(selected).then((res) => {
+                    this.map.map.closePopup();
+                    this.map.bounds = L.latLngBounds(res.bounds);
+                    this.map.imageOverlay.setBounds(this.map.bounds);
+                    this.map.imageOverlay.setUrl(`${this.api.urlServer}/getlayer?id=${this.api.id}&key=${this.api.key}&select=${JSON.stringify(selected)}`);
+                });
+
+                // dimensi yang dipilih
+                this.dimsSelected = selected;
             }
         },
         templateUrl: './components/map-container/map-container.html'
