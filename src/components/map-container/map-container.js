@@ -1,10 +1,9 @@
 angular.module('myApp')
     .component('mapContainer', {
         controller: class mapContainer {
-            constructor($scope, $filter, $compile, api) {
+            constructor($scope, $filter, api) {
                 this.scope = $scope;
                 this.filter = $filter;
-                this.compile = $compile;
                 this.api = api;
             }
 
@@ -69,45 +68,6 @@ angular.module('myApp')
                 }).addTo(this.map['map']);
                 this.map['imageOverlay'] = L.imageOverlay('', this.map.bounds, { opacity: 0.5 });
                 this.map.imageOverlay.addTo(this.map.map);
-                
-                // map event on click
-                const selectedTemplateForPopup = () => {
-                    let selectedTemplate = '';
-                    for (const propertyName in this.dimsSelected) {
-                        selectedTemplate = selectedTemplate + `${(string => string.charAt(0).toUpperCase() + string.slice(1))(propertyName)}: ${this.dimsSelected[propertyName]}`;
-                        selectedTemplate = selectedTemplate + `<br>`;
-                    }
-                    return selectedTemplate;
-                }
-                this.map.map.on('click', ({ latlng }) => {
-                    const toPopupContent = (latlng, dataPoint) => {
-                        let popupTemplate = `
-                        <div>
-                            <h5>${dataPoint.attrs.long_name}</h5>
-                            <p>
-                                Latitude: ${latlng.lat}
-                                <br>
-                                Longitude: ${latlng.lng}
-                                <br>
-                                ${selectedTemplateForPopup()}
-                                <b>Data: ${dataPoint.data} ${dataPoint.attrs.units}</b>
-                            </p>
-                            <button class="w3-button w3-block w3-round w3-border" ng-click='addMarker(${angular.toJson(latlng)}, ${angular.toJson(dataPoint)})'>Lihat grafik lokasi ini</button>
-                        </div>
-                        `;
-                        return this.compile(popupTemplate)(this.scope)[0];
-                    };
-
-                    if (this.map.bounds.contains(latlng)) {
-                        this.api.getDataPoint(this.dimsSelected, latlng)
-                            .then((res) => {
-                                let popup = L.popup()
-                                    .setLatLng(latlng)
-                                    .setContent(toPopupContent(latlng, res))
-                                    .openOn(this.map.map);
-                            });
-                    }
-                });
             }
 
             selectDimension(selected) {
@@ -119,7 +79,7 @@ angular.module('myApp')
                 });
 
                 // dimensi yang dipilih
-                this.dimsSelected = selected;
+                this.dimSelected = selected;
             }
         },
         templateUrl: './components/map-container/map-container.html'
