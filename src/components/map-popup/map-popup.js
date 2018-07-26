@@ -25,7 +25,7 @@ angular.module('myApp')
                                 ${this.dimSelectedToTemplatePopup()}
                                 <b>Data: ${dataPoint.data} ${dataPoint.attrs.units}</b>
                             </p>
-                            <button class="w3-button w3-block w3-round w3-border" ng-click='pointToMarker(${angular.toJson(latlng)}, ${angular.toJson(dataPoint)})'>Lihat grafik lokasi ini</button>
+                            <button class="w3-button w3-block w3-round w3-border" ng-click='$ctrl.lastPointMarker = ${angular.toJson(latlng)}'>Lihat grafik lokasi ini</button>
                         </div>
                         `;
                         return this.compile(popupTemplate)(this.scope)[0];
@@ -41,10 +41,6 @@ angular.module('myApp')
                             });
                     }
                 });
-
-                this.scope.pointToMarker = (latlng, dataPoint) => {
-                    this.lastMarkerAdded = { latlng, dataPoint };
-                };
             }
 
             dimSelectedToTemplatePopup() {
@@ -56,5 +52,5 @@ angular.module('myApp')
                 return selectedTemplate;
             }
         },
-        template: '<map-markers map="$ctrl.map" last-marker-added="$ctrl.lastMarkerAdded"></map-markers>'
+        template: '<map-markers map="$ctrl.map" dim-selected="$ctrl.dimSelected" last-point-marker="$ctrl.lastPointMarker" dim-selected-to-template-popup="$ctrl.dimSelectedToTemplatePopup()"></map-markers>'
     })

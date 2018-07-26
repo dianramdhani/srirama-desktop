@@ -11,7 +11,8 @@ angular.module('myApp')
             $onInit() {
                 // style
                 this.scope.footerGraphsStyle = {
-                    height: '300px'
+                    height: '300px',
+                    zIndex: 9999999
                 }
             }
         },
