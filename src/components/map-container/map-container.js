@@ -58,7 +58,6 @@ angular.module('myApp')
                     });
                 };
 
-                // inisialisasi map
                 this.map = {
                     map: L.map('map').setView([0, 115], 4),
                     bounds: L.latLngBounds([0, 0], [0, 0]),

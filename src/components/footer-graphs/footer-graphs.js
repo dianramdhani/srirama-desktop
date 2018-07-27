@@ -1,7 +1,8 @@
 angular.module('myApp')
     .component('footerGraphs', {
         bindings: {
-            footers: '='
+            footers: '=',
+            markers: '<'
         },
         controller: class footerGraphs {
             constructor($scope) {
@@ -9,11 +10,14 @@ angular.module('myApp')
             }
 
             $onInit() {
-                // style
                 this.scope.footerGraphsStyle = {
                     height: '300px',
                     zIndex: 9999999
                 }
+            }
+
+            $onChanges(e){
+                console.log('footerGraphs', e);
             }
         },
         templateUrl: './components/footer-graphs/footer-graphs.html'

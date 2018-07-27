@@ -7,12 +7,12 @@ angular.module('myApp')
             this.urlServer = 'http://localhost:4343';
             this.datasets = [];
 
-            console.log('berhasil membuat service api');
+            // console.log('berhasil membuat service api');
         }
 
         // digunakan di my-dataset
         setDataset(filePath) {
-            console.log('lokasi file', filePath);
+            // console.log('lokasi file', filePath);
             this.http({
                 'url': 'http://localhost:4343/setdataset',
                 'method': 'GET',
@@ -21,7 +21,7 @@ angular.module('myApp')
                 }
             }).then((res) => {
                 res = res.data;
-                console.log(res);
+                // console.log(res);
                 if (res.status)
                     this.datasets.push(res);
             });
@@ -31,7 +31,7 @@ angular.module('myApp')
             angular.forEach(this.datasets, ({ id }, i) => {
                 if (id === idToClose) {
                     this.datasets.splice(i, 1);
-                    console.log('tutup dataset id', id, i);
+                    // console.log('tutup dataset id', id, i);
                 }
             });
         }
@@ -42,7 +42,7 @@ angular.module('myApp')
             this.id = url.searchParams.get('id');
             this.key = url.searchParams.get('key');
 
-            console.log('id dan key', this.id, this.key);
+            // console.log('id dan key', this.id, this.key);
 
             var q = this.q.defer();
             this.http({
@@ -75,7 +75,7 @@ angular.module('myApp')
         // digunakan di my-map
         getLayerHeader(selected) {
             var q = this.q.defer();
-            console.log('yang dipilih adalah', selected, this.id, this.key)
+            // console.log('yang dipilih adalah', selected, this.id, this.key)
 
             this.http({
                 url: `${this.urlServer}/getlayerheader`,
@@ -96,7 +96,7 @@ angular.module('myApp')
                      * }
                      */
                     res = res.data;
-                    console.log('hasil layer header', res);
+                    // console.log('hasil layer header', res);
 
                     this.layerHeader = res;
                     q.resolve(res);
@@ -132,7 +132,7 @@ angular.module('myApp')
                     res.attrs.units = res.attrs.units === 'none' ? ' ' : res.attrs.units;
                     q.resolve(res);
 
-                    console.log('data yang di click', res);
+                    // console.log('data yang di click', res);
                 });
 
             return q.promise;
@@ -140,7 +140,7 @@ angular.module('myApp')
 
         // digunakan di grafik-container
         getDataPointTimeSeries(selected, latlng) {
-            console.log('data time series yang di cari', selected, latlng);
+            // console.log('data time series yang di cari', selected, latlng);
             var q = this.q.defer();
 
             this.http({
@@ -157,7 +157,7 @@ angular.module('myApp')
                 .then((res) => {
                     res = res.data;
                     q.resolve(res);
-                    console.log('ini hasil response dari getdatapointtimeseries', res);
+                    // console.log('ini hasil response dari getdatapointtimeseries', res);
                 });
 
             return q.promise;

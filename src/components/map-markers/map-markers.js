@@ -3,6 +3,7 @@ angular.module('myApp')
         bindings: {
             map: '=',
             dimSelected: '=',
+            footers: '=',
             lastPointMarker: '<',
             dimSelectedToTemplatePopup: '&'
         },
@@ -15,7 +16,6 @@ angular.module('myApp')
             }
 
             $onInit() {
-                console.log('mapMarkers terbuka');
                 this.markers = [];
             }
 
@@ -32,7 +32,8 @@ angular.module('myApp')
                 this.dataPointToTemplateMarkerPopup(this.lastPointMarker, id)
                     .then(({ dataPoint, templateMarkerPopup }) => {
                         let marker = new L.marker(this.lastPointMarker).bindPopup(templateMarkerPopup).addTo(this.map.map).openPopup();
-                        this.markers.push({ id, marker, dataPoint });
+                        // untuk trigger onChanges
+                        this.markers = angular.copy((() => { this.markers.push({ id, marker, dataPoint }); return this.markers; })());
                         console.log('markers', this.markers);
 
                         marker.on('click', () => {
@@ -83,5 +84,5 @@ angular.module('myApp')
                 return q.promise;
             }
         },
-        template: ''
+        template: '<footer-graphs footers="$ctrl.footers" markers="$ctrl.markers"></footer-graphs>'
     })  

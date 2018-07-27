@@ -2,7 +2,8 @@ angular.module('myApp')
     .component('mapPopup', {
         bindings: {
             map: '=',
-            dimSelected: '='
+            dimSelected: '=',
+            footers: '='
         },
         controller: class mapPopup {
             constructor($scope, $compile, api) {
@@ -52,5 +53,5 @@ angular.module('myApp')
                 return selectedTemplate;
             }
         },
-        template: '<map-markers map="$ctrl.map" dim-selected="$ctrl.dimSelected" last-point-marker="$ctrl.lastPointMarker" dim-selected-to-template-popup="$ctrl.dimSelectedToTemplatePopup()"></map-markers>'
+        template: '<map-markers map="$ctrl.map" dim-selected="$ctrl.dimSelected" footers="$ctrl.footers" last-point-marker="$ctrl.lastPointMarker" dim-selected-to-template-popup="$ctrl.dimSelectedToTemplatePopup()"></map-markers>'
     })
