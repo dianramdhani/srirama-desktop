@@ -29,16 +29,16 @@ angular.module('myApp')
 
             addMarker() {
                 let id = this.markers.length;
-                this.dataPointToTemplateMarkerPopup(this.lastPointMarker, id)
+                this.dataPointToTemplateMarkerPopup(this.lastPointMarker, this.lastIdMarker)
                     .then(({ dataPoint, templateMarkerPopup }) => {
-                        let marker = new L.marker(this.lastPointMarker).bindPopup(templateMarkerPopup).addTo(this.map.map).openPopup();
-                        // untuk trigger onChanges
-                        this.markers = angular.copy((() => { this.markers.push({ id, marker, dataPoint }); return this.markers; })());
-                        console.log('markers', this.markers);
+                        var marker = new L.marker(this.lastPointMarker).bindPopup(templateMarkerPopup).addTo(this.map.map).openPopup();
+                        this.markers.push({ id, marker, dataPoint });
 
                         marker.on('click', () => {
                             this.updateMarker(id);
                         });
+
+                        this.lastPointMarkerAndId = { latlng: this.lastPointMarker, id };
                     });
             }
 
@@ -48,7 +48,7 @@ angular.module('myApp')
                         this.dataPointToTemplateMarkerPopup(marker.marker._latlng, marker.id)
                             .then(({ dataPoint, templateMarkerPopup }) => {
                                 marker.dataPoint = dataPoint;
-                                marker.marker.bindPopup(templateMarkerPopup);
+                                marker.marker.bindPopup(templateMarkerPopup).openPopup();
                             });
                     }
                 });
@@ -84,5 +84,5 @@ angular.module('myApp')
                 return q.promise;
             }
         },
-        template: '<footer-graphs footers="$ctrl.footers" markers="$ctrl.markers"></footer-graphs>'
+        template: '<footer-graphs footers="$ctrl.footers" last-point-marker-and-id="$ctrl.lastPointMarkerAndId" update-marker="$ctrl.updateMarker(id)"></footer-graphs>'
     })  

@@ -1,6 +1,7 @@
 angular.module('myApp')
     .component('footerMinMaxTables', {
         bindings: {
+            map: '=',
             footers: '='
         },
         controller: class footerMinMaxTables {
@@ -9,7 +10,6 @@ angular.module('myApp')
             }
 
             $onInit() {
-                // style
                 this.scope.footerMinMaxTablesStyle = {
                     height: '300px',
                     zIndex: 9999999
