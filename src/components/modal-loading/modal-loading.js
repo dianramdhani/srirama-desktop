@@ -1,7 +1,7 @@
 angular.module('myApp')
     .component('modalLoading', {
         bindings: {
-            modals: '='
+            modalLoadingShow: '='
         },
         templateUrl: './components/modal-loading/modal-loading.html'
     })

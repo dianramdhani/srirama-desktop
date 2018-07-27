@@ -1,7 +1,8 @@
 angular.module('myApp')
     .component('modalPilihWaktu', {
         bindings: {
-            modals: '='
+            modalPilihWaktuShow: '=',
+            selectTime: '&'
         },
         controller: class modalPilihWaktu {
             constructor($scope, api) {
@@ -30,7 +31,6 @@ angular.module('myApp')
                     this.scope.dimTime = res[0];
                     this.scope.time1 = this.scope.dimTime.values[0];
                     this.scope.time2 = this.scope.dimTime.values[0];
-                    console.log('dims yang hanya akan di ambil time nya saja', this.scope.dimTime);
 
                     this.scope.style.display = 'block';
                 });
