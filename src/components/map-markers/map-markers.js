@@ -83,6 +83,14 @@ angular.module('myApp')
 
                 return q.promise;
             }
+
+            removeMarker(id) {
+                angular.forEach(this.markers, (marker) => {
+                    if (marker.id === id) {
+                        this.map.map.removeLayer(marker.marker);
+                    }
+                });
+            }
         },
-        template: '<footer-graphs footers="$ctrl.footers" last-point-marker-and-id="$ctrl.lastPointMarkerAndId" id-graph-will-open="$ctrl.idGraphWillOpen" update-marker="$ctrl.updateMarker(id)"></footer-graphs>'
+        template: '<footer-graphs footers="$ctrl.footers" last-point-marker-and-id="$ctrl.lastPointMarkerAndId" id-graph-will-open="$ctrl.idGraphWillOpen" update-marker="$ctrl.updateMarker(id)" remove-marker="$ctrl.removeMarker(id)"></footer-graphs>'
     })  

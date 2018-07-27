@@ -4,7 +4,8 @@ angular.module('myApp')
             footers: '=',
             lastPointMarkerAndId: '<',
             idGraphWillOpen: '<',
-            updateMarker: '&'
+            updateMarker: '&',
+            removeMarker: '&'
         },
         controller: class footerGraphs {
             constructor($scope, $timeout) {
@@ -33,6 +34,11 @@ angular.module('myApp')
                     el.addEventListener('activeTabChange', ({ detail }) => {
                         let id = Number(detail.tabEl.id.replace('graph-', ''));
                         this.updateMarker({ id });
+                    });
+
+                    el.addEventListener('tabRemove', ({ detail }) => {
+                        let id = Number(detail.tabEl.id.replace('graph-', ''));
+                        this.removeMarker({ id });
                     });
                 });
             }
