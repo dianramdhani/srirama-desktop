@@ -71,7 +71,7 @@ angular.module('myApp')
                                 ${this.dimSelectedToTemplatePopup()}
                                 <b>Data: ${dataPoint.data} ${dataPoint.attrs.units}</b>
                             </p>
-                            <button class="w3-button w3-block w3-round w3-border" ng-click="openTab(${id})">Lihat grafik yang telah dibuka</button>
+                            <button class="w3-button w3-block w3-round w3-border" ng-click="$ctrl.idGraphWillOpen=${id}">Lihat grafik yang telah dibuka</button>
                         </div>
                         `;
 
@@ -84,5 +84,5 @@ angular.module('myApp')
                 return q.promise;
             }
         },
-        template: '<footer-graphs footers="$ctrl.footers" last-point-marker-and-id="$ctrl.lastPointMarkerAndId" update-marker="$ctrl.updateMarker(id)"></footer-graphs>'
+        template: '<footer-graphs footers="$ctrl.footers" last-point-marker-and-id="$ctrl.lastPointMarkerAndId" id-graph-will-open="$ctrl.idGraphWillOpen" update-marker="$ctrl.updateMarker(id)"></footer-graphs>'
     })  

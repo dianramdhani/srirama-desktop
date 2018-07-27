@@ -3,6 +3,7 @@ angular.module('myApp')
         bindings: {
             footers: '=',
             lastPointMarkerAndId: '<',
+            idGraphWillOpen: '<',
             updateMarker: '&'
         },
         controller: class footerGraphs {
@@ -39,10 +40,13 @@ angular.module('myApp')
             $onChanges(e) {
                 if (e.lastPointMarkerAndId) {
                     if (e.lastPointMarkerAndId.currentValue) {
-                        console.log('footerGraphs', e);
                         this.showContainer();
                         this.addTab();
                     }
+                }
+
+                if (e.idGraphWillOpen) {
+                    this.openTab(this.idGraphWillOpen);
                 }
             }
 
@@ -63,6 +67,13 @@ angular.module('myApp')
                         id: `graph-${this.lastPointMarkerAndId.id}`
                     });
                 });
+            }
+
+            openTab(id) {
+                this.showContainer();
+                if (document.getElementById(`graph-${id}`)) {
+                    document.getElementById(`graph-${id}`).click();
+                }
             }
         },
         templateUrl: './components/footer-graphs/footer-graphs.html'
