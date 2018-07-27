@@ -30,34 +30,6 @@ angular.module('myApp')
                     });
                 };
 
-                this.modals = [
-                    {
-                        componentName: 'modal-pilih-dimensi',
-                        title: 'Pilih Dimensi',
-                        show: true
-                    },
-                    {
-                        componentName: 'modal-pilih-waktu',
-                        title: 'Pilih Waktu',
-                        show: false
-                    },
-                    {
-                        componentName: 'modal-loading',
-                        title: '',
-                        show: false
-                    }
-                ];
-                this.modalsInMenu = this.filter('filter')(this.modals, ({ componentName }) => componentName === 'modal-pilih-dimensi' || componentName === 'modal-loading' || componentName === 'modal-pilih-waktu');
-                this.modalShow = (componentName) => {
-                    angular.forEach(this.modals, (modal) => {
-                        if (modal.componentName === componentName) {
-                            modal.show = true;
-                        } else {
-                            modal.show = false;
-                        }
-                    });
-                };
-
                 this.map = {
                     map: L.map('map').setView([0, 115], 4),
                     bounds: L.latLngBounds([0, 0], [0, 0]),

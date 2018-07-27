@@ -1,7 +1,7 @@
 angular.module('myApp')
     .component('modalPilihDimensi', {
         bindings: {
-            modals: '=',
+            modalPilihDimensiShow: '=',
             selectDimension: '&'
         },
         controller: class modalPilihDimensi {
