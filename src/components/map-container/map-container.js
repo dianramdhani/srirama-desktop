@@ -47,6 +47,11 @@ angular.module('myApp')
                     this.map.bounds = L.latLngBounds(res.bounds);
                     this.map.imageOverlay.setBounds(this.map.bounds);
                     this.map.imageOverlay.setUrl(`${this.api.urlServer}/getlayer?id=${this.api.id}&key=${this.api.key}&select=${JSON.stringify(selected)}`);
+
+                    this.legend = {
+                        legendText: res.legends,
+                        unit: res.units
+                    };
                 });
 
                 // dimensi yang dipilih

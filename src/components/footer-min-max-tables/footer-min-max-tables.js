@@ -11,7 +11,7 @@ angular.module('myApp')
 
             $onInit() {
                 this.scope.footerMinMaxTablesStyle = {
-                    height: '300px',
+                    height: '400px',
                     zIndex: 9999999
                 }
             }
