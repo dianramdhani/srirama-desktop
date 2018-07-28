@@ -10,6 +10,21 @@
     <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css">
     <link rel="stylesheet" href="../node_modules/highcharts/css/highcharts.css">
     <style>
+        :not(input):not(textarea),
+        :not(input):not(textarea)::after,
+        :not(input):not(textarea)::before {
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        input,
+        button,
+        textarea,
+        :focus {
+            outline: none;
+        }
+
         body {
             position: absolute;
             top: 0;
@@ -24,6 +39,7 @@
     <script src="../node_modules/leaflet/dist/leaflet.js"></script>
     <script src="../node_modules/highcharts/highstock.js"></script>
     <script src="../node_modules/file-saver/FileSaver.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPjl3kDpSUQ3j5lgxnNKGhSpOB9xcmWq0&libraries=places"></script>
     <script src="../node_modules/angular/angular.js"></script>
 </head>
 
@@ -43,6 +59,7 @@
     <script src="./components/map-popup/map-popup.js"></script>
     <script src="./components/map-markers/map-markers.js"></script>
     <script src="./components/legend-container/legend-container.js"></script>
+    <script src="./components/modal-pilih-lokasi/modal-pilih-lokasi.js"></script>
 </body>
 
 </html>

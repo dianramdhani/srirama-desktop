@@ -1,9 +1,9 @@
 angular.module('myApp')
     .component('menuContainer', {
         bindings: {
-            map: '=',
             selectDimension: '&',
-            footerShow: '&'
+            footerShow: '&',
+            selectLocation: '&'
         },
         templateUrl: './components/menu-container/menu-container.html'
     })

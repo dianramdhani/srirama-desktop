@@ -56,6 +56,10 @@ angular.module('myApp')
                 // dimensi yang dipilih
                 this.dimSelected = selected;
             }
+
+            selectLocation(latlng) {
+                this.map.map.fireEvent('click', { latlng });
+            }
         },
         templateUrl: './components/map-container/map-container.html'
     })
