@@ -25,7 +25,6 @@ angular.module('myApp')
                     });
 
                     this.scope.style.display = 'block';
-                    console.log('dims tanpa lat dan lon', res);
                 });
             }
         },

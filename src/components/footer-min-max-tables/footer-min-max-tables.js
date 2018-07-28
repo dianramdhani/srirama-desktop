@@ -2,7 +2,8 @@ angular.module('myApp')
     .component('footerMinMaxTables', {
         bindings: {
             map: '=',
-            footers: '='
+            footers: '=',
+            modalCariNilaiMinMaxShow: '='
         },
         controller: class footerMinMaxTables {
             constructor($scope) {

@@ -3,7 +3,8 @@ angular.module('myApp')
         bindings: {
             selectDimension: '&',
             footerShow: '&',
-            selectLocation: '&'
+            selectLocation: '&',
+            modalCariNilaiMinMaxShow: '='
         },
         templateUrl: './components/menu-container/menu-container.html'
     })
