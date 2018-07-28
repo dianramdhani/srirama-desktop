@@ -43,6 +43,7 @@ angular.module('myApp')
             }
 
             updateMarker(id) {
+                this.map.map.closePopup();
                 angular.forEach(this.markers, (marker) => {
                     if (marker.id === id) {
                         this.dataPointToTemplateMarkerPopup(marker.marker._latlng, marker.id)

@@ -40,6 +40,7 @@
         <div style="background-color: rgb(242, 242, 242); position: absolute; height: calc(100% - 42px); width: 100%;">
             <div ng-repeat="graph in $ctrl.graphs" ng-attr-id="graph-{{graph.id}}" ng-show="graph.id === $ctrl.idTabActiveNow" style="width: 100%; height: 100%;"></div>
             <div style="position: absolute; top: 10px; right: 10px; z-index: 99999999;" ng-hide="$ctrl.graphs.length === 0">
+                <button class="w3-button w3-round w3-white w3-border w3-padding-small w3-small" ng-click="saveThisGraph()">Simpan Data Grafik</button>
                 <button class="w3-button w3-round w3-white w3-border w3-padding-small w3-small" ng-click="$ctrl.modalPilihWaktuShow = true">Pilih Waktu</button>
             </div>
         </div>

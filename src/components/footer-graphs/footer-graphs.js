@@ -45,6 +45,25 @@ angular.module('myApp')
                         this.removeMarker({ id });
                     });
                 });
+
+                this.scope.saveThisGraph = () => {
+                    angular.forEach(this.graphs, (graph) => {
+                        if (graph.id === this.idTabActiveNow) {
+                            let data = graph.dataPointTimeSeries,
+                                dataCsv = '';
+                            for (const key in data.coords) {
+                                if (key !== data.dims[0]) {
+                                    dataCsv = dataCsv + `"${key}",${data.coords[key].data}\n`;
+                                }
+                            }
+                            dataCsv = dataCsv + `"${data.dims[0]}","${data.attrs.long_name} (${data.attrs.units})"\n`;
+                            for (let i = 0; i < data.data.length; i++) {
+                                dataCsv = dataCsv + `"${data.coords[data.dims[0]].data[i]}",${data.data[i]}\n`;
+                            }
+                            saveAs(new Blob([dataCsv], { type: 'text/csv;charset=utf-8;' }), "data.csv");
+                        }
+                    });
+                };
             }
 
             $onChanges(e) {
@@ -99,6 +118,7 @@ angular.module('myApp')
                         this.api.getDataPointTimeSeries(selected, graph.latlng).then((res) => {
                             this.modalLoadingShow = false;
                             initGraph(`graph-${graph.id}`, res);
+                            graph['dataPointTimeSeries'] = res;
                         });
                     }
                 });

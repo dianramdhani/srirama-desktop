@@ -31,12 +31,10 @@ angular.module('myApp')
                 };
 
                 this.map = {
-                    map: L.map('map').setView([0, 115], 4),
+                    map: L.map('map', { attributionControl: false }).setView([0, 115], 4),
                     bounds: L.latLngBounds([0, 0], [0, 0]),
                 };
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(this.map['map']);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map['map']);
                 this.map['imageOverlay'] = L.imageOverlay('', this.map.bounds, { opacity: 0.5 });
                 this.map.imageOverlay.addTo(this.map.map);
             }
@@ -52,6 +50,7 @@ angular.module('myApp')
                         legendText: res.legends,
                         unit: res.units
                     };
+                    this.scope.title = res.long_name;
                 });
 
                 // dimensi yang dipilih
