@@ -39,7 +39,11 @@
         </div>
         <div style="background-color: rgb(242, 242, 242); position: absolute; height: calc(100% - 42px); width: 100%;">
             <div ng-repeat="table in $ctrl.tables | filter: { id: idTabActiveNow }" ng-show="countTab > 0" style="width: 100%; height: 100%;">
-                {{table}}
+                <center>
+                    <h4>Tabel Data {{ table.selected.minOrMax === 'min'? 'Terkecil': 'Terbesar' }}</h4>
+                    {{table.dimStr}}
+                </center>
+                <br>
             </div>
         </div>
     </div>

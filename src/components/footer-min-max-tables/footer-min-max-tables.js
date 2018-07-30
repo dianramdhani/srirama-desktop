@@ -37,8 +37,6 @@ angular.module('myApp')
                         let id = Number(detail.tabEl.id.replace('tab-min-max-table-', ''));
                         this.scope.idTabActiveNow = id;
                         this.scope.$apply();
-
-                        console.log('footerMinMaxTables activeTabChange', this.scope.idTabActiveNow);
                     });
 
                     el.addEventListener('tabRemove', ({ detail }) => {
@@ -49,7 +47,6 @@ angular.module('myApp')
             }
 
             selectMinMax(selected) {
-                console.log('footerMinMaxTables', selected);
                 this.showContainer();
                 this.addTab(selected);
             }
@@ -65,9 +62,22 @@ angular.module('myApp')
             }
 
             addTab(selected) {
-                this.tables.push({ id: this.tables.length });
+                this.addTables(selected);
 
-                let title = `${JSON.stringify(selected)}`;
+                let title = ''
+                for (const key in selected) {
+                    if (key === 'minOrMax') {
+                        title = `${selected.minOrMax === 'min' ? 'Min ' : 'Max '}`;
+                        continue;
+                    }
+
+                    if (selected[key].length) {
+                        title = title + `${key.toUpperCase()}: ${selected[key][0]}-${selected[key][1]}`;
+                        continue;
+                    } else {
+                        title = title + `; ${key.toUpperCase()}: ${selected[key]}`;
+                    }
+                }
                 this.timeout(() => {
                     this.chromeTabs.addTab({
                         title,
@@ -76,6 +86,24 @@ angular.module('myApp')
                 });
 
                 this.scope.countTab++;
+            }
+
+            addTables(selected) {
+                let id = this.tables.length,
+                    dimStr = '';
+                for (const key in selected) {
+                    if (key === 'minOrMax') {
+                        continue;
+                    }
+
+                    if (selected[key].length) {
+                        dimStr = dimStr + `${key.toUpperCase()}: ${selected[key][0]} s/d ${selected[key][1]}`;
+                        continue;
+                    } else {
+                        dimStr = dimStr + `, ${key.toUpperCase()}: ${selected[key]}`;
+                    }
+                }
+                this.tables.push({ id, selected, dimStr });
             }
         },
         templateUrl: './components/footer-min-max-tables/footer-min-max-tables.html'

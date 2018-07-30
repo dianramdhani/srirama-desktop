@@ -4,12 +4,12 @@
             <div class="w3-center">
                 <br>
                 <span class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal" ng-click="$ctrl.modalCariNilaiMinMaxShow = false">&times;</span>
-                <h3>Cari Nilai Maksimal dan Minimal</h3>
+                <h3>Cari Nilai Terkecil dan Terbesar</h3>
             </div>
 
             <div class="w3-container">
                 <div class="w3-section">
-                    <h4 style="font-weight: bold;">Cari Nilai Minimal</h4>
+                    <h4 style="font-weight: bold;">Cari Nilai Terkecil</h4>
 
                     <div ng-repeat="dim in dims">
                         <span ng-if="$index === 0">
@@ -36,7 +36,7 @@
 
                     <hr>
 
-                    <h4 style="font-weight: bold;">Cari Nilai Maksimal</h4>
+                    <h4 style="font-weight: bold;">Cari Nilai Terbesar</h4>
 
                     <div ng-repeat="dim in dims">
                         <span ng-if="$index === 0">
