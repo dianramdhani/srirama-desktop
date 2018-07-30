@@ -18,13 +18,14 @@ angular.module('myApp')
                 this.scope.footerGraphsStyle = {
                     height: '400px',
                     zIndex: 9999999
-                }
+                };
 
                 this.graphs = [];
+                this.scope.countTab = 0;
 
                 this.timeout(() => {
                     this.chromeTabs = new ChromeTabs();
-                    const el = document.querySelector('.chrome-tabs');
+                    const el = document.getElementById('tabs-graphs');
                     this.chromeTabs.init(el, {
                         tabOverlapDistance: 14,
                         minWidth: 45,
@@ -37,18 +38,23 @@ angular.module('myApp')
                     el.addEventListener('activeTabChange', ({ detail }) => {
                         let id = Number(detail.tabEl.id.replace('tab-graph-', ''));
                         this.updateMarker({ id });
-                        this.idTabActiveNow = id;
+                        
+                        this.scope.idTabActiveNow = id;
+                        this.scope.$apply();
                     });
 
                     el.addEventListener('tabRemove', ({ detail }) => {
                         let id = Number(detail.tabEl.id.replace('tab-graph-', ''));
                         this.removeMarker({ id });
+                        
+                        this.scope.countTab--;
+                        this.scope.$apply();
                     });
                 });
 
                 this.scope.saveThisGraph = () => {
                     angular.forEach(this.graphs, (graph) => {
-                        if (graph.id === this.idTabActiveNow) {
+                        if (graph.id === this.scope.idTabActiveNow) {
                             let data = graph.dataPointTimeSeries,
                                 dataCsv = '';
                             for (const key in data.coords) {
@@ -102,6 +108,8 @@ angular.module('myApp')
                         id: `tab-graph-${this.lastPointMarkerAndId.id}`
                     });
                 });
+
+                this.scope.countTab++;
             }
 
             openTab(id) {
@@ -113,7 +121,7 @@ angular.module('myApp')
 
             selectTime(selected) {
                 angular.forEach(this.graphs, (graph) => {
-                    if (graph.id === this.idTabActiveNow) {
+                    if (graph.id === this.scope.idTabActiveNow) {
                         this.modalLoadingShow = true;
                         this.api.getDataPointTimeSeries(selected, graph.latlng).then((res) => {
                             this.modalLoadingShow = false;

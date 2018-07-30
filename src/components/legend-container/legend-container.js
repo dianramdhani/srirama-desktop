@@ -8,7 +8,6 @@ angular.module('myApp')
             $onChanges(e) {
                 if (e.legend) {
                     if (e.legend.currentValue) {
-                        console.log('ada perubahan legend', e.legend);
                         var bg = '#AAD3DF';
                         var op = 0.7;
                         var paletteDir = './img/legend.png';

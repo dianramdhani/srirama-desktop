@@ -1,7 +1,8 @@
 angular.module('myApp')
     .component('modalCariNilaiMinMax', {
         bindings: {
-            modalCariNilaiMinMaxShow: '='
+            modalCariNilaiMinMaxShow: '=',
+            selectMinMax: "&"
         },
         controller: class modalCariNilaiMinMax {
             constructor($scope, api) {
@@ -32,10 +33,6 @@ angular.module('myApp')
 
                     this.scope.style.display = 'block';
                 });
-
-                this.scope.selectMinMax = (selected) => {
-                    console.log('modalCariNilaiMinMax', selected);
-                }
             }
         },
         templateUrl: './components/modal-cari-nilai-min-max/modal-cari-nilai-min-max.html'
