@@ -132,6 +132,19 @@ class Datasets():
                 datasel = dataset['dataset'][key].sel(**select)
                 return datasel
 
+    def getDataPointMinOrMax(self, id, key, minormax, select):
+        for dataset in Datasets.__datasets:
+            if dataset['id'] == id:
+                datasel = dataset['dataset'][key]
+                select[datasel.dims[0]] = dataset['dataset'][datasel.dims[0]
+                                                             ].loc[select[datasel.dims[0]][0]:select[datasel.dims[0]][1]]
+                datasel = dataset['dataset'][key].sel(**select)
+                if request.args.get('minormax') == 'min':
+                    datasel = datasel.where(datasel == datasel.min(), drop=True)
+                elif request.args.get('minormax') == 'max':
+                    datasel = datasel.where(datasel == datasel.max(), drop=True)
+                return datasel
+
     def getCount(self):
         return Datasets.__countDataset
 
@@ -195,9 +208,18 @@ def getdatapointtimeseries():
     lat = float(request.args.get('lat'))
     lon = float(request.args.get('lon'))
     select = json.loads(request.args.get('select'))
-    print(id, key, lat, lon, select)
     hasil = Datasets().getDataPointTimeSeries(
         id=id, key=key, select=select, lat=lat, lon=lon).to_dict()
+    return jsonify(hasil)
+
+
+@app.route('/getdatapointminormax')
+def getdatapointminormax():
+    id = int(request.args.get('id'))
+    key = request.args.get('key')
+    minormax = request.args.get('minormax')
+    select = json.loads(request.args.get('select'))
+    hasil = Datasets().getDataPointMinOrMax(id=id, key=key, minormax=minormax, select=select).to_dict()
     return jsonify(hasil)
 
 

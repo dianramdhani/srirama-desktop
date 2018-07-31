@@ -162,4 +162,29 @@ angular.module('myApp')
 
             return q.promise;
         }
+
+        // digunakan di footer-min-max-tables
+        getDataPointMinOrMax(selected) {
+            let q = this.q.defer(),
+                minOrMax = selected.minOrMax;
+
+            delete selected.minOrMax;
+
+            this.http({
+                url: `${this.urlServer}/getdatapointminormax`,
+                method: 'GET',
+                params: {
+                    id: this.id,
+                    key: this.key,
+                    minormax: minOrMax,
+                    select: JSON.stringify(selected)
+                }
+            })
+                .then((res) => {
+                    res = res.data;
+                    q.resolve(res);
+                });
+
+            return q.promise;
+        }
     })

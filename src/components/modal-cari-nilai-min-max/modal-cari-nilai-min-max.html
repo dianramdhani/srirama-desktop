@@ -9,9 +9,9 @@
 
             <div class="w3-container">
                 <div class="w3-section">
-                    <h4 style="font-weight: bold;">Cari Nilai Terkecil</h4>
+                    <h5 style="font-weight: bold;">Cari Nilai Terkecil</h5>
 
-                    <div ng-repeat="dim in dims">
+                    <div class="w3-small" ng-repeat="dim in dims">
                         <span ng-if="$index === 0">
                             <label>
                                 <b>{{dim.key | uppercase}} 1</b>
@@ -32,13 +32,13 @@
                                 required></select>
                         </span>
                     </div>
-                    <button class="w3-button w3-block w3-light-grey w3-section w3-padding" type="submit" ng-click="$ctrl.selectMinMax({ selected: selectMin }); $ctrl.modalCariNilaiMinMaxShow = false;">Pilih</button>
+                    <button class="w3-button w3-block w3-light-grey w3-section w3-padding w3-small" type="submit" ng-click="$ctrl.selectMinMax({ selected: selectMin }); $ctrl.modalCariNilaiMinMaxShow = false;">Pilih</button>
 
                     <hr>
 
-                    <h4 style="font-weight: bold;">Cari Nilai Terbesar</h4>
+                    <h5 style="font-weight: bold;">Cari Nilai Terbesar</h5>
 
-                    <div ng-repeat="dim in dims">
+                    <div class="w3-small" ng-repeat="dim in dims">
                         <span ng-if="$index === 0">
                             <label>
                                 <b>{{dim.key | uppercase}} 1</b>
@@ -59,7 +59,7 @@
                                 required></select>
                         </span>
                     </div>
-                    <button class="w3-button w3-block w3-light-grey w3-section w3-padding" type="submit" ng-click="$ctrl.selectMinMax({ selected: selectMax }); $ctrl.modalCariNilaiMinMaxShow = false;">Pilih</button>
+                    <button class="w3-button w3-block w3-light-grey w3-section w3-padding w3-small" type="submit" ng-click="$ctrl.selectMinMax({ selected: selectMax }); $ctrl.modalCariNilaiMinMaxShow = false;">Pilih</button>
 
                     <hr>
 
