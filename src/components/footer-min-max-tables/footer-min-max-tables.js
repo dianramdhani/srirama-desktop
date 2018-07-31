@@ -3,7 +3,9 @@ angular.module('myApp')
         bindings: {
             map: '=',
             footers: '=',
-            modalCariNilaiMinMaxShow: '='
+            modalCariNilaiMinMaxShow: '=',
+            selectDimension: '&',
+            selectLocation: '&'
         },
         controller: class footerMinMaxTables {
             constructor($scope, $timeout, api) {
@@ -47,6 +49,25 @@ angular.module('myApp')
 
                 this.scope.plot = (id, i) => {
                     console.log('footerMinMaxTables plot', id, i);
+                    angular.forEach(this.tables, (table) => {
+                        if (table.id === id) {
+                            let _table = angular.copy(table);
+                            _table.dims.splice(-2, 2);  // remove lat, lng
+
+                            let selected = {}
+                            _table.dims.forEach((dim) => {
+                                selected[dim] = _table.data[i][dim];
+                            });
+                            this.selectDimension({ selected });
+
+                            _table = angular.copy(table);
+                            let latlng = {
+                                lat: _table.data[i][_table.dims[_table.dims.length - 2]],
+                                lng: _table.data[i][_table.dims[_table.dims.length - 1]]
+                            };
+                            this.selectLocation({ latlng });
+                        }
+                    });
                 }
             }
 

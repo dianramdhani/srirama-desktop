@@ -1,10 +1,11 @@
 angular.module('myApp')
     .component('mapContainer', {
         controller: class mapContainer {
-            constructor($scope, $filter, api) {
+            constructor($scope, $filter, $timeout, api) {
                 this.scope = $scope;
                 this.filter = $filter;
                 this.api = api;
+                this.timeout = $timeout;
             }
 
             $onInit() {
@@ -58,7 +59,9 @@ angular.module('myApp')
             }
 
             selectLocation(latlng) {
-                this.map.map.fireEvent('click', { latlng });
+                this.timeout(()=>{
+                    this.map.map.fireEvent('click', { latlng });
+                });
             }
         },
         templateUrl: './components/map-container/map-container.html'
