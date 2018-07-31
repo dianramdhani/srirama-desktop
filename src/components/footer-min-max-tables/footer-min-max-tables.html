@@ -43,20 +43,23 @@
                     <h4>Tabel Data {{ table.selected.minOrMax === 'min'? 'Terkecil': 'Terbesar' }}</h4>
                     {{table.dimStr}}
                 </center>
-                {{table}}
-                <table border="1">
-                    <tr>
-                        <th>Data</th>
-                        <th ng-repeat="dim in table.dims">{{dim}}</th>
-                        <th>Plot</th>>
-                    </tr>
-                    <tr ng-repeat="data in table.data track by $index">
-                        <td>{{data.data}}</td>
-                        <td ng-repeat="dim in table.dims">{{data[dim]}}</td>
-                        <td>
-                            <button ng-click="plot(idTabActiveNow, $index)">Plot</button>
-                        </td>
-                    </tr>
+                <table class="w3-table w3-bordered w3-hoverable w3-small" ng-show="table.data">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th ng-repeat="dim in table.dims">{{dim}}</th>
+                            <th>Plot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in table.data track by $index">
+                            <td>{{data.data}}</td>
+                            <td ng-repeat="dim in table.dims">{{data[dim]}}</td>
+                            <td>
+                                <button class="w3-btn w3-round w3-border w3-tiny w3-padding-small w3-light-grey" ng-click="plot(idTabActiveNow, $index)">Plot</button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

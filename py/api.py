@@ -140,9 +140,13 @@ class Datasets():
                                                              ].loc[select[datasel.dims[0]][0]:select[datasel.dims[0]][1]]
                 datasel = dataset['dataset'][key].sel(**select)
                 if request.args.get('minormax') == 'min':
-                    datasel = datasel.where(datasel == datasel.min(), drop=True)
+                    datasel = datasel.where(
+                        datasel == datasel.min(), drop=True)
                 elif request.args.get('minormax') == 'max':
-                    datasel = datasel.where(datasel == datasel.max(), drop=True)
+                    datasel = datasel.where(
+                        datasel == datasel.max(), drop=True)
+                datasel[datasel.dims[0]].data = datasel[datasel.dims[0]
+                                                        ].data.astype(str).tolist()
                 return datasel
 
     def getCount(self):
@@ -219,7 +223,8 @@ def getdatapointminormax():
     key = request.args.get('key')
     minormax = request.args.get('minormax')
     select = json.loads(request.args.get('select'))
-    hasil = Datasets().getDataPointMinOrMax(id=id, key=key, minormax=minormax, select=select).to_dict()
+    hasil = Datasets().getDataPointMinOrMax(
+        id=id, key=key, minormax=minormax, select=select).to_dict()
     return jsonify(hasil)
 
 

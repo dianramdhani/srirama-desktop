@@ -110,32 +110,35 @@ angular.module('myApp')
                 this.tables.push({ id, selected, dimStr });
 
                 this.modalLoadingShow = true;
-                this.api.getDataPointMinOrMax(selected).then((res) => {
-                    this.modalLoadingShow = false;
+                this.api.getDataPointMinOrMax(selected)
+                    .then((res) => {
+                        this.modalLoadingShow = false;
 
-                    let data = [];
-                    for (const i in res.data) {
-                        for (const y in res.data[i]) {
-                            for (const x in res.data[i][y]) {
-                                let temp = {
-                                    data: res.data[i][y][x],
-                                };
-                                for (const key in res.coords) {
-                                    temp[key] = res.coords[key].data[i]
+                        let data = [];
+                        for (const i in res.data) {
+                            for (const y in res.data[i]) {
+                                for (const x in res.data[i][y]) {
+                                    let temp = {
+                                        data: res.data[i][y][x],
+                                    };
+                                    for (const key in res.coords) {
+                                        temp[key] = res.coords[key].data[i]
+                                    }
+                                    data.push(temp);
                                 }
-                                data.push(temp);
                             }
                         }
-                    }
 
-                    angular.forEach(this.tables, (table) => {
-                        if (table.id === id) {
-                            table['dims'] = res.dims;
-                            table['data'] = data;
-                        }
+                        angular.forEach(this.tables, (table) => {
+                            if (table.id === id) {
+                                table['dims'] = res.dims;
+                                table['data'] = data;
+                            }
+                        });
+                    })
+                    .catch(() => {
+                        this.modalLoadingShow = false;
                     });
-                    console.log('footerMinMaxTables addTables', res);
-                });
             }
         },
         templateUrl: './components/footer-min-max-tables/footer-min-max-tables.html'
