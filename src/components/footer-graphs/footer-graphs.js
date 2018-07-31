@@ -38,7 +38,7 @@ angular.module('myApp')
                     el.addEventListener('activeTabChange', ({ detail }) => {
                         let id = Number(detail.tabEl.id.replace('tab-graph-', ''));
                         this.updateMarker({ id });
-                        
+
                         this.scope.idTabActiveNow = id;
                         this.scope.$apply();
                     });
@@ -46,7 +46,7 @@ angular.module('myApp')
                     el.addEventListener('tabRemove', ({ detail }) => {
                         let id = Number(detail.tabEl.id.replace('tab-graph-', ''));
                         this.removeMarker({ id });
-                        
+
                         this.scope.countTab--;
                         this.scope.$apply();
                     });
@@ -201,11 +201,13 @@ angular.module('myApp')
                         }]
                     });
 
-                    window.addEventListener('resize', () => {
-                        var width = document.getElementById(divId).clientWidth,
-                            height = document.getElementById(divId).clientHeight;
-                        graph.setSize(width, height);
-                    }, true);
+                    if (document.getElementById(divId)) {
+                        window.addEventListener('resize', () => {
+                            var width = document.getElementById(divId).clientWidth,
+                                height = document.getElementById(divId).clientHeight;
+                            graph.setSize(width, height);
+                        }, true);
+                    }
                 }
             }
         },
