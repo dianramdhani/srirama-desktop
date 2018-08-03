@@ -18,7 +18,7 @@ const url = require('url');
 // app.on('will-quit', () => {
 //     pyProc.kill();
 //     pyProc = null;
-// })
+// });
 
 app.on('ready', () => {
     var { width, height } = require('electron').screen.getPrimaryDisplay().size,

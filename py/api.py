@@ -149,6 +149,61 @@ class Datasets():
                                                         ].data.astype(str).tolist()
                 return datasel
 
+    def getLayerHeaderCropped(self, id, key, select, bounds):
+        res = {}
+        for dataset in Datasets.__datasets:
+            if dataset['id'] == id:
+                datasel = dataset['dataset'][key]
+
+                lat1 = dataset['dataset'][datasel.dims[-2]
+                                          ].sel(**{datasel.dims[-2]: bounds['lat'][0], 'method': 'nearest'})
+                lat2 = dataset['dataset'][datasel.dims[-2]
+                                          ].sel(**{datasel.dims[-2]: bounds['lat'][1], 'method': 'nearest'})
+                lng1 = dataset['dataset'][datasel.dims[-1]
+                                          ].sel(**{datasel.dims[-1]: bounds['lng'][0], 'method': 'nearest'})
+                lng2 = dataset['dataset'][datasel.dims[-1]
+                                          ].sel(**{datasel.dims[-1]: bounds['lng'][1], 'method': 'nearest'})
+                select[datasel.dims[-2]
+                       ] = dataset['dataset'][datasel.dims[-2]].loc[lat1: lat2]
+                select[datasel.dims[-1]
+                       ] = dataset['dataset'][datasel.dims[-1]].loc[lng1: lng2]
+
+                datasel = dataset['dataset'][key].sel(**select)
+
+                lat = datasel[datasel.dims[-2]].data
+                minlat = numpy.amin(lat).item()
+                maxlat = numpy.amax(lat).item()
+                lon = datasel[datasel.dims[-1]].data
+                minlon = numpy.amin(lon).item()
+                maxlon = numpy.amax(lon).item()
+                res['bounds'] = [[minlat, minlon], [maxlat, maxlon]]
+                res['long_name'] = datasel.long_name
+                _legend = self.__getLegend(datasel)
+                res['units'] = _legend['units']
+                res['legends'] = _legend['legends']
+        return res
+
+    def getLayerCropped(self, id, key, select, bounds):
+        for dataset in Datasets.__datasets:
+            if dataset['id'] == id:
+                datasel = dataset['dataset'][key]
+
+                lat1 = dataset['dataset'][datasel.dims[-2]
+                                          ].sel(**{datasel.dims[-2]: bounds['lat'][0], 'method': 'nearest'})
+                lat2 = dataset['dataset'][datasel.dims[-2]
+                                          ].sel(**{datasel.dims[-2]: bounds['lat'][1], 'method': 'nearest'})
+                lng1 = dataset['dataset'][datasel.dims[-1]
+                                          ].sel(**{datasel.dims[-1]: bounds['lng'][0], 'method': 'nearest'})
+                lng2 = dataset['dataset'][datasel.dims[-1]
+                                          ].sel(**{datasel.dims[-1]: bounds['lng'][1], 'method': 'nearest'})
+                select[datasel.dims[-2]
+                       ] = dataset['dataset'][datasel.dims[-2]].loc[lat1: lat2]
+                select[datasel.dims[-1]
+                       ] = dataset['dataset'][datasel.dims[-1]].loc[lng1: lng2]
+
+                datasel = dataset['dataset'][key].sel(**select)
+                return datasel
+
     def getCount(self):
         return Datasets.__countDataset
 
@@ -226,6 +281,28 @@ def getdatapointminormax():
     hasil = Datasets().getDataPointMinOrMax(
         id=id, key=key, minormax=minormax, select=select).to_dict()
     return jsonify(hasil)
+
+
+@app.route('/getlayerheadercropped')
+def getlayerheadercropped():
+    id = int(request.args.get('id'))
+    key = request.args.get('key')
+    select = json.loads(request.args.get('select'))
+    bounds = json.loads(request.args.get('bounds'))
+    hasil = Datasets().getLayerHeaderCropped(
+        id=id, key=key, select=select, bounds=bounds)
+    return jsonify(hasil)
+
+
+@app.route('/getlayercropped')
+def getlayercropped():
+    id = int(request.args.get('id'))
+    key = request.args.get('key')
+    select = json.loads(request.args.get('select'))
+    bounds = json.loads(request.args.get('bounds'))
+    hasil = plot.toPngResponse(Datasets().getLayerCropped(
+        id=id, key=key, select=select, bounds=bounds))
+    return send_file(hasil, mimetype='image/png')
 
 
 app.run(host='0.0.0.0', port=4343, debug=True)

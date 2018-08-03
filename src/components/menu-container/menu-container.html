@@ -4,6 +4,7 @@
         <button class="w3-button w3-block w3-round w3-white w3-border w3-small" ng-init="$ctrl.modalPilihDimensiShow = true" ng-click="$ctrl.modalPilihDimensiShow = true; listMenuShow = false;">Pilih Dimensi</button>
         <button class="w3-button w3-block w3-round w3-white w3-border w3-small" ng-click="$ctrl.modalPilihLokasiShow = true; listMenuShow = false;">Pilih Lokasi</button>
         <button class="w3-button w3-block w3-round w3-white w3-border w3-small" ng-click="$ctrl.modalCariNilaiMinMaxShow = true; listMenuShow = false;">Cari Nilai Terkecil dan Terbesar</button>
+        <button class="w3-button w3-block w3-round w3-white w3-border w3-small" ng-click="$ctrl.spatialCrop(); listMenuShow = false;">Potong Data</button>
         <button class="w3-button w3-block w3-round w3-white w3-border w3-small" ng-click="$ctrl.footerShow({ componentName: 'footer-graphs' }); listMenuShow = false;">Lihat Grafik</button>
         <button class="w3-button w3-block w3-round w3-white w3-border w3-small" ng-click="$ctrl.footerShow({ componentName: 'footer-min-max-tables' }); listMenuShow = false;">Lihat Tabel Min dan Max</button>
     </div>

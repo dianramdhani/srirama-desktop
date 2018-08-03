@@ -11,7 +11,7 @@
 <h4 class="w3-round w3-white w3-border" style="z-index: 9999999; position: absolute; top: 10px; transform: translate(-50%, 0); left: 50%; padding: 10px;"
     ng-show="title">{{title}}</h4>
 
-<menu-container select-location="$ctrl.selectLocation(latlng)" select-dimension="$ctrl.selectDimension(selected)" footer-show="$ctrl.footerShow(componentName)" modal-cari-nilai-min-max-show="$ctrl.modalCariNilaiMinMaxShow"></menu-container>
+<menu-container select-location="$ctrl.selectLocation(latlng)" select-dimension="$ctrl.selectDimension(selected)" footer-show="$ctrl.footerShow(componentName)" spatial-crop="$ctrl.spatialCrop()" modal-cari-nilai-min-max-show="$ctrl.modalCariNilaiMinMaxShow"></menu-container>
 <map-popup map="$ctrl.map" dim-selected="$ctrl.dimSelected" footers="$ctrl.footers"></map-popup>
 <footer-min-max-tables map="$ctrl.map" footers="$ctrl.footers" modal-cari-nilai-min-max-show="$ctrl.modalCariNilaiMinMaxShow" select-dimension="$ctrl.selectDimension(selected)" select-location="$ctrl.selectLocation(latlng)"></footer-min-max-tables>
 <legend-container footers="$ctrl.footers" legend="$ctrl.legend"></legend-container>

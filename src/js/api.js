@@ -72,7 +72,7 @@ angular.module('myApp')
             return q.promise;
         }
 
-        // digunakan di my-map
+        // digunakan di map-container
         getLayerHeader(selected) {
             var q = this.q.defer();
             // console.log('yang dipilih adalah', selected, this.id, this.key)
@@ -135,6 +135,26 @@ angular.module('myApp')
                     // console.log('data yang di click', res);
                 });
 
+            return q.promise;
+        }
+
+        getLayerHeaderCropped(selected, bounds) {
+            var q = this.q.defer();
+            this.http({
+                'url': `${this.urlServer}/getlayerheadercropped`,
+                'method': 'GET',
+                'params': {
+                    'id': this.id,
+                    'key': this.key,
+                    'select': JSON.stringify(selected),
+                    'bounds': JSON.stringify(bounds),
+                }
+            })
+                .then((res) => {
+                    res = res.data;
+                    this.layerHeader = res;
+                    q.resolve(res);
+                })
             return q.promise;
         }
 

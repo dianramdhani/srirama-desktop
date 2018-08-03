@@ -4,6 +4,7 @@ angular.module('myApp')
             selectDimension: '&',
             footerShow: '&',
             selectLocation: '&',
+            spatialCrop: '&',
             modalCariNilaiMinMaxShow: '='
         },
         templateUrl: './components/menu-container/menu-container.html'

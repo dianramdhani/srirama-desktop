@@ -43,6 +43,7 @@ angular.module('myApp')
             selectDimension(selected) {
                 this.api.getLayerHeader(selected).then((res) => {
                     this.map.map.closePopup();
+                    this.map.imageOverlay.setUrl('');
                     this.map.bounds = L.latLngBounds(res.bounds);
                     this.map.imageOverlay.setBounds(this.map.bounds);
                     this.map.imageOverlay.setUrl(`${this.api.urlServer}/getlayer?id=${this.api.id}&key=${this.api.key}&select=${JSON.stringify(selected)}`);
@@ -59,9 +60,30 @@ angular.module('myApp')
             }
 
             selectLocation(latlng) {
-                this.timeout(()=>{
+                this.timeout(() => {
                     this.map.map.fireEvent('click', { latlng });
                 });
+            }
+
+            spatialCrop() {
+                if (this.dimSelected) {
+                    let bounds = {
+                        lat: [this.map.map.getBounds()._southWest.lat, this.map.map.getBounds()._northEast.lat],
+                        lng: [this.map.map.getBounds()._southWest.lng, this.map.map.getBounds()._northEast.lng]
+                    };
+                    this.api.getLayerHeaderCropped(this.dimSelected, bounds).then((res) => {
+                        this.map.map.closePopup();
+                        this.map.imageOverlay.setUrl('');
+                        this.map.bounds = L.latLngBounds(res.bounds);
+                        this.map.imageOverlay.setBounds(this.map.bounds);
+                        this.map.imageOverlay.setUrl(`${this.api.urlServer}/getlayercropped?id=${this.api.id}&key=${this.api.key}&select=${JSON.stringify(this.dimSelected)}&bounds=${JSON.stringify(bounds)}`);
+
+                        this.legend = {
+                            legendText: res.legends,
+                            unit: res.units
+                        };
+                    });
+                }
             }
         },
         templateUrl: './components/map-container/map-container.html'
