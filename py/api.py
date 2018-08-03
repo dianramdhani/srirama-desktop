@@ -82,20 +82,19 @@ class Datasets():
 
     def getLayerHeader(self, id, key, select):
         res = {}
-        for dataset in Datasets.__datasets:
-            if dataset['id'] == id:
-                datasel = dataset['dataset'][key].sel(**select)
-                lat = datasel[datasel.dims[-2]].data
-                minlat = numpy.amin(lat).item()
-                maxlat = numpy.amax(lat).item()
-                lon = datasel[datasel.dims[-1]].data
-                minlon = numpy.amin(lon).item()
-                maxlon = numpy.amax(lon).item()
-                res['bounds'] = [[minlat, minlon], [maxlat, maxlon]]
-                res['long_name'] = datasel.long_name
-                _legend = self.__getLegend(datasel)
-                res['units'] = _legend['units']
-                res['legends'] = _legend['legends']
+        datasel = self.getLayer(id=id, key=key, select=select)
+
+        lat = datasel[datasel.dims[-2]].data
+        minlat = numpy.amin(lat).item()
+        maxlat = numpy.amax(lat).item()
+        lon = datasel[datasel.dims[-1]].data
+        minlon = numpy.amin(lon).item()
+        maxlon = numpy.amax(lon).item()
+        res['bounds'] = [[minlat, minlon], [maxlat, maxlon]]
+        res['long_name'] = datasel.long_name
+        _legend = self.__getLegend(datasel)
+        res['units'] = _legend['units']
+        res['legends'] = _legend['legends']
         return res
 
     def getLayer(self, id, key, select, lat=None, lon=None):
@@ -151,36 +150,19 @@ class Datasets():
 
     def getLayerHeaderCropped(self, id, key, select, bounds):
         res = {}
-        for dataset in Datasets.__datasets:
-            if dataset['id'] == id:
-                datasel = dataset['dataset'][key]
+        datasel = self.getLayerCropped(id=id, key=key, select=select, bounds=bounds)
 
-                lat1 = dataset['dataset'][datasel.dims[-2]
-                                          ].sel(**{datasel.dims[-2]: bounds['lat'][0], 'method': 'nearest'})
-                lat2 = dataset['dataset'][datasel.dims[-2]
-                                          ].sel(**{datasel.dims[-2]: bounds['lat'][1], 'method': 'nearest'})
-                lng1 = dataset['dataset'][datasel.dims[-1]
-                                          ].sel(**{datasel.dims[-1]: bounds['lng'][0], 'method': 'nearest'})
-                lng2 = dataset['dataset'][datasel.dims[-1]
-                                          ].sel(**{datasel.dims[-1]: bounds['lng'][1], 'method': 'nearest'})
-                select[datasel.dims[-2]
-                       ] = dataset['dataset'][datasel.dims[-2]].loc[lat1: lat2]
-                select[datasel.dims[-1]
-                       ] = dataset['dataset'][datasel.dims[-1]].loc[lng1: lng2]
-
-                datasel = dataset['dataset'][key].sel(**select)
-
-                lat = datasel[datasel.dims[-2]].data
-                minlat = numpy.amin(lat).item()
-                maxlat = numpy.amax(lat).item()
-                lon = datasel[datasel.dims[-1]].data
-                minlon = numpy.amin(lon).item()
-                maxlon = numpy.amax(lon).item()
-                res['bounds'] = [[minlat, minlon], [maxlat, maxlon]]
-                res['long_name'] = datasel.long_name
-                _legend = self.__getLegend(datasel)
-                res['units'] = _legend['units']
-                res['legends'] = _legend['legends']
+        lat = datasel[datasel.dims[-2]].data
+        minlat = numpy.amin(lat).item()
+        maxlat = numpy.amax(lat).item()
+        lon = datasel[datasel.dims[-1]].data
+        minlon = numpy.amin(lon).item()
+        maxlon = numpy.amax(lon).item()
+        res['bounds'] = [[minlat, minlon], [maxlat, maxlon]]
+        res['long_name'] = datasel.long_name
+        _legend = self.__getLegend(datasel)
+        res['units'] = _legend['units']
+        res['legends'] = _legend['legends']
         return res
 
     def getLayerCropped(self, id, key, select, bounds):
