@@ -4,8 +4,8 @@ angular.module('myApp')
             selectDimension: '&',
             footerShow: '&',
             selectLocation: '&',
-            spatialCrop: '&',
-            modalCariNilaiMinMaxShow: '='
+            modalCariNilaiMinMaxShow: '=',
+            modalPotongDataShow: '='
         },
         templateUrl: './components/menu-container/menu-container.html'
     })

@@ -85,6 +85,12 @@ angular.module('myApp')
                     });
                 }
             }
+
+            restoreSpatialCropped(){
+                if (this.dimSelected) {
+                    this.selectDimension(this.dimSelected);
+                }
+            }
         },
         templateUrl: './components/map-container/map-container.html'
     })
