@@ -65,12 +65,14 @@ angular.module('myApp')
                 });
             }
 
-            spatialCrop() {
+            spatialCrop(bounds = null) {
                 if (this.dimSelected) {
-                    let bounds = {
-                        lat: [this.map.map.getBounds()._southWest.lat, this.map.map.getBounds()._northEast.lat],
-                        lng: [this.map.map.getBounds()._southWest.lng, this.map.map.getBounds()._northEast.lng]
-                    };
+                    if (bounds === null) {
+                        bounds = {
+                            lat: [this.map.map.getBounds()._southWest.lat, this.map.map.getBounds()._northEast.lat],
+                            lng: [this.map.map.getBounds()._southWest.lng, this.map.map.getBounds()._northEast.lng]
+                        };
+                    }
                     this.api.getLayerHeaderCropped(this.dimSelected, bounds).then((res) => {
                         this.map.map.closePopup();
                         this.map.imageOverlay.setUrl('');
@@ -86,7 +88,7 @@ angular.module('myApp')
                 }
             }
 
-            restoreSpatialCropped(){
+            restoreSpatialCropped() {
                 if (this.dimSelected) {
                     this.selectDimension(this.dimSelected);
                 }
