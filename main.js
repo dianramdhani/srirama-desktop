@@ -15,6 +15,7 @@ const url = require('url');
 //         return path.join(__dirname, PY_DIST_FOLDER, PY_MODULE, PY_MODULE)
 //     }
 // });
+
 // app.on('will-quit', () => {
 //     pyProc.kill();
 //     pyProc = null;

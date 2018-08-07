@@ -146,7 +146,21 @@ class Datasets():
                         datasel == datasel.max(), drop=True)
                 datasel[datasel.dims[0]].data = datasel[datasel.dims[0]
                                                         ].data.astype(str).tolist()
-                return datasel
+
+                res = {
+                    'dims': numpy.flip(datasel.to_dict()['coords'].keys()).tolist(),
+                    'data': []
+                }
+                for _data in datasel:
+                    for _datay in _data:
+                        for _datax in _datay:
+                            if numpy.isnan(_datax) == False:
+                                _res = {}
+                                _res['data'] = _datax.data.tolist()
+                                for dim in res['dims']:
+                                    _res[dim] = _datax[dim].data.tolist()
+                                res['data'].append(_res)
+                return res
 
     def getLayerHeaderCropped(self, id, key, select, bounds):
         res = {}
@@ -261,7 +275,7 @@ def getdatapointminormax():
     minormax = request.args.get('minormax')
     select = json.loads(request.args.get('select'))
     hasil = Datasets().getDataPointMinOrMax(
-        id=id, key=key, minormax=minormax, select=select).to_dict()
+        id=id, key=key, minormax=minormax, select=select)
     return jsonify(hasil)
 
 

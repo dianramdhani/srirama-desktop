@@ -53,17 +53,17 @@ angular.module('myApp')
                         if (table.id === id) {
                             let _table = angular.copy(table);
                             _table.dims.splice(-2, 2);  // remove lat, lng
-
+                            
                             let selected = {}
                             _table.dims.forEach((dim) => {
                                 selected[dim] = _table.data[i][dim];
                             });
                             this.selectDimension({ selected });
-
+                            
                             _table = angular.copy(table);
                             let latlng = {
-                                lat: _table.data[i][_table.dims[_table.dims.length - 2]],
-                                lng: _table.data[i][_table.dims[_table.dims.length - 1]]
+                                lat: _table.data[i][_table.dims[_table.dims.length - 1]],
+                                lng: _table.data[i][_table.dims[_table.dims.length - 2]]
                             };
                             this.selectLocation({ latlng });
                         }
@@ -135,25 +135,10 @@ angular.module('myApp')
                     .then((res) => {
                         this.modalLoadingShow = false;
 
-                        let data = [];
-                        for (const i in res.data) {
-                            for (const y in res.data[i]) {
-                                for (const x in res.data[i][y]) {
-                                    let temp = {
-                                        data: res.data[i][y][x],
-                                    };
-                                    for (const key in res.coords) {
-                                        temp[key] = res.coords[key].data[i]
-                                    }
-                                    data.push(temp);
-                                }
-                            }
-                        }
-
                         angular.forEach(this.tables, (table) => {
                             if (table.id === id) {
                                 table['dims'] = res.dims;
-                                table['data'] = data;
+                                table['data'] = res.data;
                             }
                         });
                     })
