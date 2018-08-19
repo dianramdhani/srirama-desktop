@@ -4,7 +4,7 @@ angular.module('myApp')
             modalPilihLokasiShow: '=',
             selectLocation: '&'
         },
-        controller: class modalPilihLokasi {
+        controller: ['$scope', '$timeout', class modalPilihLokasi {
             constructor($scope, $timeout) {
                 this.scope = $scope;
                 this.timeout = $timeout;
@@ -27,6 +27,6 @@ angular.module('myApp')
                     });
                 });
             }
-        },
-        templateUrl: './components/modal-pilih-lokasi/modal-pilih-lokasi.html'
+        }],
+        template: require('./modal-pilih-lokasi.html')
     })

@@ -75,3 +75,6 @@ dist/
 
 # srirama
 srirama*
+
+# hasil compile webpack
+src/dist/

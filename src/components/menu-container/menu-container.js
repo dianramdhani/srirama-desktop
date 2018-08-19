@@ -7,5 +7,5 @@ angular.module('myApp')
             modalCariNilaiMinMaxShow: '=',
             modalPotongDataShow: '='
         },
-        templateUrl: './components/menu-container/menu-container.html'
+        template: require('./menu-container.html')
     })

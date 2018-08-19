@@ -7,7 +7,7 @@ angular.module('myApp')
             selectDimension: '&',
             selectLocation: '&'
         },
-        controller: class footerMinMaxTables {
+        controller: ['$scope', '$timeout', 'api', class footerMinMaxTables {
             constructor($scope, $timeout, api) {
                 this.scope = $scope;
                 this.timeout = $timeout;
@@ -53,13 +53,13 @@ angular.module('myApp')
                         if (table.id === id) {
                             let _table = angular.copy(table);
                             _table.dims.splice(-2, 2);  // remove lat, lng
-                            
+
                             let selected = {}
                             _table.dims.forEach((dim) => {
                                 selected[dim] = _table.data[i][dim];
                             });
                             this.selectDimension({ selected });
-                            
+
                             _table = angular.copy(table);
                             let latlng = {
                                 lat: _table.data[i][_table.dims[_table.dims.length - 1]],
@@ -146,6 +146,6 @@ angular.module('myApp')
                         this.modalLoadingShow = false;
                     });
             }
-        },
-        templateUrl: './components/footer-min-max-tables/footer-min-max-tables.html'
+        }],
+        template: require('./footer-min-max-tables.html')
     })

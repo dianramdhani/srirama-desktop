@@ -1,6 +1,6 @@
 angular.module('myApp')
     .component('mapContainer', {
-        controller: class mapContainer {
+        controller: ['$scope', '$filter', '$timeout', 'api', class mapContainer {
             constructor($scope, $filter, $timeout, api) {
                 this.scope = $scope;
                 this.filter = $filter;
@@ -93,6 +93,6 @@ angular.module('myApp')
                     this.selectDimension(this.dimSelected);
                 }
             }
-        },
-        templateUrl: './components/map-container/map-container.html'
+        }],
+        template: require('./map-container.html')
     })

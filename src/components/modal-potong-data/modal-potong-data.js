@@ -5,5 +5,5 @@ angular.module('myApp')
             spatialCrop: '&',
             restoreSpatialCropped: '&'
         },
-        templateUrl: './components/modal-potong-data/modal-potong-data.html'
+        template: require('./modal-potong-data.html')
     })

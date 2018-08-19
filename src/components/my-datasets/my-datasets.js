@@ -3,7 +3,7 @@ angular.module('myApp')
         bindings: {
             addTabs: '&'
         },
-        controller: class myDatasets {
+        controller: ['$scope', 'app', 'Menu', 'dialog', 'api', class myDatasets {
             constructor($scope, app, Menu, dialog, api) {
                 this.scope = $scope;
 
@@ -66,6 +66,6 @@ angular.module('myApp')
                     });
                 }
             }
-        },
-        templateUrl: './components/my-datasets/my-datasets.html'
+        }],
+        template: require('./my-datasets.html')
     })

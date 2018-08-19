@@ -3,5 +3,5 @@ angular.module('myApp')
         bindings: {
             modalLoadingShow: '='
         },
-        templateUrl: './components/modal-loading/modal-loading.html'
+        template: require('./modal-loading.html')
     })

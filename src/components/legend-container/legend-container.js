@@ -4,7 +4,7 @@ angular.module('myApp')
             footers: '=',
             legend: '<'
         },
-        controller: class legendContainer {
+        controller: [class legendContainer {
             $onChanges(e) {
                 if (e.legend) {
                     if (e.legend.currentValue) {
@@ -68,6 +68,6 @@ angular.module('myApp')
                     }
                 }
             }
-        },
-        templateUrl: './components/legend-container/legend-container.html'
+        }],
+        template: require('./legend-container.html')
     })

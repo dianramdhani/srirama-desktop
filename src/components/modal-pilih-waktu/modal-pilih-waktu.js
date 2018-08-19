@@ -4,7 +4,7 @@ angular.module('myApp')
             modalPilihWaktuShow: '=',
             selectTime: '&'
         },
-        controller: class modalPilihWaktu {
+        controller: ['$scope', 'api', class modalPilihWaktu {
             constructor($scope, api) {
                 this.scope = $scope;
                 this.api = api;
@@ -35,6 +35,6 @@ angular.module('myApp')
                     this.scope.style.display = 'block';
                 });
             }
-        },
-        templateUrl: './components/modal-pilih-waktu/modal-pilih-waktu.html'
+        }],
+        template: require('./modal-pilih-waktu.html')
     })

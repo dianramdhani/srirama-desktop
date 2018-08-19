@@ -4,7 +4,7 @@ angular.module('myApp')
             modalPilihDimensiShow: '=',
             selectDimension: '&'
         },
-        controller: class modalPilihDimensi {
+        controller: ['$scope', 'api', class modalPilihDimensi {
             constructor($scope, api) {
                 this.scope = $scope;
                 this.api = api;
@@ -27,6 +27,6 @@ angular.module('myApp')
                     this.scope.style.display = 'block';
                 });
             }
-        },
-        templateUrl: './components/modal-pilih-dimensi/modal-pilih-dimensi.html'
+        }],
+        template: require('./modal-pilih-dimensi.html')
     })

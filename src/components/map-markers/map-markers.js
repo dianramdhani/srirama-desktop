@@ -7,7 +7,7 @@ angular.module('myApp')
             lastPointMarker: '<',
             dimSelectedToTemplatePopup: '&'
         },
-        controller: class mapMarkers {
+        controller: ['$scope', '$compile', '$q', 'api', class mapMarkers {
             constructor($scope, $compile, $q, api) {
                 this.scope = $scope;
                 this.compile = $compile;
@@ -92,6 +92,6 @@ angular.module('myApp')
                     }
                 });
             }
-        },
+        }],
         template: '<footer-graphs footers="$ctrl.footers" last-point-marker-and-id="$ctrl.lastPointMarkerAndId" id-graph-will-open="$ctrl.idGraphWillOpen" update-marker="$ctrl.updateMarker(id)" remove-marker="$ctrl.removeMarker(id)"></footer-graphs>'
     })  

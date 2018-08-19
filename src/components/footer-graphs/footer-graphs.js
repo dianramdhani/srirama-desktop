@@ -7,7 +7,7 @@ angular.module('myApp')
             updateMarker: '&',
             removeMarker: '&'
         },
-        controller: class footerGraphs {
+        controller: ['$scope', '$timeout', 'api', class footerGraphs {
             constructor($scope, $timeout, api) {
                 this.scope = $scope;
                 this.timeout = $timeout;
@@ -210,6 +210,6 @@ angular.module('myApp')
                     }
                 }
             }
-        },
-        templateUrl: './components/footer-graphs/footer-graphs.html'
+        }],
+        template: require('./footer-graphs.html')
     })

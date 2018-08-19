@@ -1,5 +1,5 @@
 angular.module('myApp')
-    .service('api', class api {
+    .service('api', ['$http', '$q', class api {
         constructor($http, $q) {
             this.http = $http;
             this.q = $q;
@@ -210,4 +210,4 @@ angular.module('myApp')
 
             return q.promise;
         }
-    })
+    }])
